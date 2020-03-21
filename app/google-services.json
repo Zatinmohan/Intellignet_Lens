@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "98520240268",
+    "firebase_url": "https://intellignet-lens.firebaseio.com",
+    "project_id": "intellignet-lens",
+    "storage_bucket": "intellignet-lens.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:98520240268:android:a15c17756552fbed5eeba9",
+        "android_client_info": {
+          "package_name": "com.example.intellignetlens"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "98520240268-tcgp5477p55b54cbk12e5diunisvb20e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.intellignetlens",
+            "certificate_hash": "1c7a51f144da8fcb7cd600eb66f394f0631e4883"
+          }
+        },
+        {
+          "client_id": "98520240268-l9speu2p5ffjf9c2vjg40n7t44jsep66.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCY7bjEG14aTrttAdBQQPVkK_tYH7_03p0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "98520240268-l9speu2p5ffjf9c2vjg40n7t44jsep66.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
