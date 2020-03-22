@@ -19,17 +19,14 @@ import java.util.List;
 public class Website extends AsyncTask<Void,Void,Void> {
 
     int statuscode;
+    Data data = new Data();
     ArrayList<Data>ob = new ArrayList<Data>();
+    final String url = "https://www.boschtools.com/us/en/boschtools-ocs/new-products-33327-c/";
 
-    //List<List<String>> fullstr = new ArrayList<List<String>>();
-    //ArrayList<String> onlystr = new ArrayList<String>();
-    //ArrayList<String> names = new ArrayList<String>();
-
-    //StringBuilder stringBuilder = new StringBuilder();
     @Override
     protected Void doInBackground(Void... voids) {
         try{
-            Connection connection =Jsoup.connect("https://www.boschtools.com/us/en/boschtools-ocs/new-products-33327-c/")
+            Connection connection =Jsoup.connect(url)
                     .userAgent("Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.101 Safari/537.36")
                     .timeout(10000);
 
@@ -43,12 +40,12 @@ public class Website extends AsyncTask<Void,Void,Void> {
             Elements div_child = form.select("div");
 
             int count=1;
-            String str = "div#product-holder-"+count;
+            String str = "div#product-holder-"+count;                                               //used a counter wise listing.
 
-            for(int i=2;i<div_child.size();i++)
+            for(int i=2;i<div_child.size();i++)                                                     //first and second link is not important
             {
                 Elements div = div_child.select(str);
-                if(div.size()==0)
+                if(div.size()==0)                                                                   //if no division tag is found, then cut the loop.
                     break;
 
                     Elements link = div.select("a");
@@ -59,18 +56,16 @@ public class Website extends AsyncTask<Void,Void,Void> {
                     String product_name = Name.select("div.hlt-f").text();
                     String text = link.attr("href");
 
-                    text = "https:"+text;
-
-                    ob.add(new Data(text,product_id,product_name));
-//                    onlystr.add(text);
-//                    names.add(product_id);
-//                    names.add(product_name);
+                    text = "https:"+text;                                                           //link of the detailed product page.
+                    //data.add_Data(text,product_id,product_name);
+                    ob.add(new Data(text,product_id,product_name,null));                 //description is null for now.
 
                     str = str.substring(0,19);
                     count++;
                     str+=count;
             }
 
+            data.save_list(ob);                                                                     //save the list.
             //obj.addition(onlystr,names);
         } catch (IOException e) {
             e.printStackTrace();
