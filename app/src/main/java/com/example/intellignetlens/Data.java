@@ -3,14 +3,14 @@ package com.example.intellignetlens;
 import java.util.ArrayList;
 
 public class Data{
-     String links;
-     String product_id;
-     String product_name;
+     private String links;
+    private String product_id;
+     private String product_name;
 
 
-    String description=null;
-    static String tag;
-    static ArrayList<Data>array_list = new ArrayList<Data>();
+    private String description=null;
+    private String tag;
+    private static ArrayList<Data>items = new ArrayList<Data>();
 
     public Data(){
         //ArrayList<Data>array_list = new ArrayList<Data>();
@@ -28,12 +28,12 @@ public class Data{
         this.description=description;
     }
 
-    public void save_list(ArrayList<Data>arrya_list){
+    public void save_items(ArrayList<Data>arrya_list){
         //this.array_list=new ArrayList<Data>(arrya_list);
-        this.array_list=arrya_list;}
+        this.items=arrya_list;}
 
-    public ArrayList<Data> get_list(){
-        return array_list;
+    public ArrayList<Data> get_items(){
+        return items;
     }
 
     public String show_link(){

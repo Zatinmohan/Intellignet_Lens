@@ -30,8 +30,10 @@ public class MainActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new Website().execute();
-                new Inside_website().execute();
+                new Category().execute();                                                           //Main Category Page
+                new Sub_Category().execute();                                                       //Sub Category Page
+                new Website().execute();                                                          //Item Page
+                new Inside_website().execute();                                                   //Detailed Page
             }
         });
     }

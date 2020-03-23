@@ -22,8 +22,8 @@ public class Inside_website extends AsyncTask<Void,Void,Void> {
     protected Void doInBackground(Void... voids) {
         try
         {
-            obj = data.get_list();                                                                  //fetching the saved list.
-//            int x = obj.size();                                                                   //Checking the size of the list [Debugging]
+            obj = data.get_items();                                                                  //fetching the saved list.
+            int x = obj.size();                                                                   //Checking the size of the list [Debugging]
 
             for(int i=0;i<obj.size();i++){
                 String url = obj.get(i).show_link();
@@ -58,7 +58,7 @@ public class Inside_website extends AsyncTask<Void,Void,Void> {
                 obj.set(i,new Data(link,product_id,product_name,s));                                //adding the description to the main list.
             }
 
-            data.save_list(obj);                                                                    //Saving the new List
+            data.save_items(obj);                                                                    //Saving the new List
 
         }
         catch (IOException e) {

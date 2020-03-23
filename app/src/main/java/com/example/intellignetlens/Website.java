@@ -20,33 +20,39 @@ public class Website extends AsyncTask<Void,Void,Void> {
 
     int statuscode;
     Data data = new Data();
+    MainData mainData = new MainData();
+
+    ArrayList<MainData>sub_cat = new ArrayList<MainData>();
     ArrayList<Data>ob = new ArrayList<Data>();
-    final String url = "https://www.boschtools.com/us/en/boschtools-ocs/new-products-33327-c/";
 
     @Override
     protected Void doInBackground(Void... voids) {
         try{
-            Connection connection =Jsoup.connect(url)
-                    .userAgent("Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.101 Safari/537.36")
-                    .timeout(10000);
-
-            Document document = connection.get();
-            statuscode = connection.response().statusCode();
-
-            Elements body = document.select("body.leaf-category");
-            Elements div_page = body.select("div#page");
-            Elements sections1 = div_page.select("section#section-products");
-            Elements form = sections1.select("form#compareForm");
-            Elements div_child = form.select("div");
-
-            int count=1;
-            String str = "div#product-holder-"+count;                                               //used a counter wise listing.
-
-            for(int i=2;i<div_child.size();i++)                                                     //first and second link is not important
+            sub_cat = mainData.get_sub_category_links();
+            for(int i=0;i<sub_cat.size();i++)
             {
-                Elements div = div_child.select(str);
-                if(div.size()==0)                                                                   //if no division tag is found, then cut the loop.
-                    break;
+                    String url = sub_cat.get(i).getLinks();
+                    Connection connection =Jsoup.connect(url)
+                            .userAgent("Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.101 Safari/537.36")
+                            .timeout(10000);
+
+                Document document = connection.get();
+                statuscode = connection.response().statusCode();
+
+                Elements body = document.select("body.leaf-category");
+                Elements div_page = body.select("div#page");
+                Elements sections1 = div_page.select("section#section-products");
+                Elements form = sections1.select("form#compareForm");
+                Elements div_child = form.select("div");
+
+                int count=1;
+                String str = "div#product-holder-"+count;                                               //used a counter wise listing.
+
+                for(int j=2;j<div_child.size();j++)                                                     //first and second link is not important
+                {
+                    Elements div = div_child.select(str);
+                    if(div.size()==0)                                                                   //if no division tag is found, then cut the loop.
+                        break;
 
                     Elements link = div.select("a");
                     Element text_name = link.select("div").get(2);
@@ -63,10 +69,10 @@ public class Website extends AsyncTask<Void,Void,Void> {
                     str = str.substring(0,19);
                     count++;
                     str+=count;
+                }
             }
 
-            data.save_list(ob);                                                                     //save the list.
-            //obj.addition(onlystr,names);
+            data.save_items(ob);                                                                     //save the list.
         } catch (IOException e) {
             e.printStackTrace();
         }
