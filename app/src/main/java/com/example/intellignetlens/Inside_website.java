@@ -30,7 +30,7 @@ public class Inside_website extends AsyncTask<Void,Void,Void> {
             obj = data.get_items();                                                                  //fetching the saved list.
             int x = obj.size();                                                                   //Checking the size of the list [Debugging]
 
-            for(int i=0;i<obj.size();i++){
+            for(int i=700;i<obj.size();i++){
                 String url = obj.get(i).show_link();
                 Connection connection = Jsoup.connect(url)
                         .userAgent("Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.101 Safari/537.36")
@@ -68,7 +68,7 @@ public class Inside_website extends AsyncTask<Void,Void,Void> {
 //            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Items");
 //            Data website_data = new Data();
 //
-//            for(int i=0;i<obj.size();i++)
+//            for(int i=700;i<obj.size();i++)
 //            {
 //                String a,b,c;
 //                a=obj.get(i).show_Product_id();
@@ -77,7 +77,7 @@ public class Inside_website extends AsyncTask<Void,Void,Void> {
 //
 //                website_data.end_data(a,b,c);
 //
-//                databaseReference.child("Items").setValue(website_data);
+//                databaseReference.child("Items").push().setValue(website_data);
 //            }
 
         }
