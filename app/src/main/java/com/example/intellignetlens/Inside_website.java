@@ -2,6 +2,10 @@ package com.example.intellignetlens;
 
 import android.os.AsyncTask;
 
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -17,6 +21,7 @@ public class Inside_website extends AsyncTask<Void,Void,Void> {
 
     ArrayList<Data>obj = new ArrayList<Data>();
     Data data = new Data();
+    String resp;
 
     @Override
     protected Void doInBackground(Void... voids) {
@@ -60,12 +65,30 @@ public class Inside_website extends AsyncTask<Void,Void,Void> {
 
             data.save_items(obj);                                                                    //Saving the new List
 
+//            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Items");
+//            Data website_data = new Data();
+//
+//            for(int i=0;i<obj.size();i++)
+//            {
+//                String a,b,c;
+//                a=obj.get(i).show_Product_id();
+//                b=obj.get(i).show_Product_name();
+//                c=obj.get(i).show_product_description();
+//
+//                website_data.end_data(a,b,c);
+//
+//                databaseReference.child("Items").setValue(website_data);
+//            }
+
         }
         catch (IOException e) {
             e.printStackTrace();
         }
-
-
         return null;
+    }
+
+    @Override
+    protected void onPostExecute(Void aVoid) {
+        super.onPostExecute(aVoid);
     }
 }

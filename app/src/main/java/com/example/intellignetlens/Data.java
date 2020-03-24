@@ -24,6 +24,12 @@ public class Data{
         this.description=description;
     }
 
+    public void end_data(String product_id,String product_name, String description){
+        this.description=description;
+        this.product_id=product_id;
+        this.product_name=product_name;
+    }
+
     public void setDescription(String description){
         this.description=description;
     }
@@ -43,4 +49,6 @@ public class Data{
     public String show_Product_name(){return product_name;}
 
     public String show_Product_id(){return product_id;}
+
+    public String show_product_description(){return description;}
 }
