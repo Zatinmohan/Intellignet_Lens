@@ -29,6 +29,8 @@ public class Website extends AsyncTask<Void,Void,Void> {
     protected Void doInBackground(Void... voids) {
         try{
             sub_cat = mainData.get_sub_category_links();
+
+            int x = sub_cat.size();
             for(int i=0;i<sub_cat.size();i++)
             {
                     String url = sub_cat.get(i).getLinks();
