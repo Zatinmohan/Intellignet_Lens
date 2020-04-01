@@ -12,6 +12,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -30,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
     Button button;
     TextView textView;
 
+    TextInputEditText search_bar;
+
     DatabaseReference mdatabase;
 
     ArrayList<Data>ARRAY_LIST = new ArrayList<Data>();
@@ -41,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
         mdatabase = FirebaseDatabase.getInstance().getReference().child("Items");
 
+        search_bar = findViewById(R.id.search_bar);
         textView = (TextView)findViewById(R.id.text_view);
         button = (Button)findViewById(R.id.button);
         button.setOnClickListener(new View.OnClickListener() {
@@ -50,31 +55,9 @@ public class MainActivity extends AppCompatActivity {
                 new Sub_Category().execute();                                                            //Sub Category Page
                 new Website().execute();                                                                //Item Page
                 new Inside_website().execute();                                                        //Detailed Page
-
-//                ARRAY_LIST.add(new Data("Hello","hi","whatsapp","null"));
-//                ARRAY_LIST.add(new Data("Hello1","hi1","whatsapp1","null1"));
-//                ARRAY_LIST.add(new Data("Hello2","hi2","whatsapp2","null2"));
-//                ARRAY_LIST.add(new Data("Hello3","hi3","whatsapp3","null3"));
-////
-////                mdatabase.child("CHILD").setValue(ARRAY_LIST);
-//                for(int i=0;i<ARRAY_LIST.size();i++){
-//                    String a,b,c,dd;
-//
-//                    a=ARRAY_LIST.get(i).show_link();
-//                    b=ARRAY_LIST.get(i).show_Product_id();
-//                    c=ARRAY_LIST.get(i).show_Product_name();
-//                    dd=ARRAY_LIST.get(i).show_product_description();
-//
-//                    Data object = new Data();
-//
-//                    object.setDescription(dd);
-//                    object.setProduct_id(b);
-//                    object.setProduct_name(c);
-//                    object.setLinks(a);
-//
-//                    mdatabase.child(b).setValue(object);
-//                }
             }
         });
+
+
     }
 }
