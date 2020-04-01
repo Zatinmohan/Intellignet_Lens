@@ -33,7 +33,7 @@ public class Inside_website extends AsyncTask<Void,Void,Void> {
         try
         {
             obj = data.get_items();                                                                  //fetching the saved list.
-            int x = obj.size();                                                                   //Checking the size of the list [Debugging]
+            int x = obj.size();                                                                     //Checking the size of the list [Debugging]
 
             for(int i=0;i<obj.size();i++){
 
@@ -72,12 +72,10 @@ public class Inside_website extends AsyncTask<Void,Void,Void> {
 
                 //-------------------------------------------------------
             }
-            int xx=obj.size();
-            int yy=xx;
+
            data.save_items(obj);                                                                    //Saving the new List
 
             mdatabase = FirebaseDatabase.getInstance().getReference().child("Items");
-//            int xyz = obj.size();
 //
 //
             for(int i=0;i<obj.size();i++)
