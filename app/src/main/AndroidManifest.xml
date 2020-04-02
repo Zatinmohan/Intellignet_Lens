@@ -10,6 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity"/>
+        <activity android:name=".resyncActivity"/>
 
         <activity android:name=".LoginActivity">
             <intent-filter>
@@ -20,4 +21,8 @@
         </activity>
     </application>
     <uses-permission android:name="android.permission.INTERNET" />
+
+    <meta-data
+        android:name="android.support.PARENT_ACTIVITY"
+        android:value=".MainActivity"/>
 </manifest>
