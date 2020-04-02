@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:title="i-Lens"
-        android:background="@color/colorPrimary"
+        android:background="@drawable/toolbar_grad"
         android:id="@+id/toolbar2"/>
 
     <ImageView
@@ -18,7 +18,8 @@
         android:src="@drawable/sync"
         android:layout_gravity="center"
         android:padding="10dp"
-        android:layout_margin="20dp"/>
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="20dp"/>
 
     <TextView
         android:layout_width="match_parent"
@@ -26,9 +27,9 @@
         android:layout_margin="20dp"
         android:padding="10dp"
         android:textSize="20sp"
-        android:text="This will Update the database of the application whenever the new data is stored in the website.
-                        This will consume your Data as it will resync all the products and update the new one.
-                         \nThis Process will work in background."/>
+        android:text="This will update the database of the application whenever the new data is stored in the website.
+                        This will consume your internet data as it will re-sync all the products and update the new ones.
+                         \nThis process runs in background."/>
 
     <Button
         android:layout_width="wrap_content"

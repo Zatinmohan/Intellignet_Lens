@@ -7,20 +7,26 @@ import androidx.appcompat.widget.Toolbar;
 
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,9 +34,15 @@ public class MainActivity extends AppCompatActivity {
     TextView textView;
 
     TextInputEditText search_bar;
+    //ImageView cropImageView;
 
     DatabaseReference mdatabase;
     Toolbar toolbar;
+    ImageView camera;
+
+    //Uri filepath;
+
+    //private final int PICK_IMAGE_REQUEST = 71;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,8 +53,21 @@ public class MainActivity extends AppCompatActivity {
 
         search_bar = findViewById(R.id.search_bar);
         toolbar = findViewById(R.id.toolbar);
-        textView = (TextView)findViewById(R.id.text_view);
         button = (Button)findViewById(R.id.button);
+        //cropImageView = findViewById(R.id.profile_pic);
+        camera = findViewById(R.id.camera);
+
+        camera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               // chooseImage();
+
+                CropImage.activity()
+                        .setGuidelines(CropImageView.Guidelines.ON)
+                        .start(MainActivity.this);
+
+            }
+        });
 
         setSupportActionBar(toolbar);
 
@@ -56,6 +81,21 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            if (resultCode == RESULT_OK) {
+
+                Uri resultUri = result.getUri();
+                //cropImageView.setImageURI(resultUri);
+
+            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                Exception error = result.getError();
+            }
+        }
     }
 
     @Override
