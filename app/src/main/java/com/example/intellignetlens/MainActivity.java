@@ -23,8 +23,12 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
@@ -34,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     TextView textView;
 
     TextInputEditText search_bar;
+    String content;
     //ImageView cropImageView;
 
     DatabaseReference mdatabase;
@@ -54,7 +59,9 @@ public class MainActivity extends AppCompatActivity {
         search_bar = findViewById(R.id.search_bar);
         toolbar = findViewById(R.id.toolbar);
         button = (Button)findViewById(R.id.button);
+
         //cropImageView = findViewById(R.id.profile_pic);
+
         camera = findViewById(R.id.camera);
 
         camera.setOnClickListener(new View.OnClickListener() {
@@ -71,17 +78,39 @@ public class MainActivity extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
 
+
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                new Category().execute();                                                                 //Main Category Page
-//                new Sub_Category().execute();                                                            //Sub Category Page
-//                new Website().execute();                                                                //Item Page
-//                new Inside_website().execute();                                                        //Detailed Page
+
+                content = search_bar.getText().toString();
+                Query query = mdatabase.orderByChild("product_name").endAt(content);
+                String b = content;
+                        query.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                for(DataSnapshot snapshot: dataSnapshot.getChildren()){
+                                    String z = snapshot.child("product_name").getValue(String.class);
+                                    String t = z;
+
+                                    if(z!=null && z.contains(content)){
+                                        String y = snapshot.child("description").getValue(String.class);
+                                        String x = snapshot.child("product_id").getValue(String.class);
+                                    }
+
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
             }
         });
 
     }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
