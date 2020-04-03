@@ -31,6 +31,7 @@ public class Inside_website extends AsyncTask<Void,Void,Void> {
     protected Void doInBackground(Void... voids) {
         try
         {
+            //a
             obj = data.get_items();                                                                  //fetching the saved list.
             int x = obj.size();                                                                     //Checking the size of the list [Debugging]
 
