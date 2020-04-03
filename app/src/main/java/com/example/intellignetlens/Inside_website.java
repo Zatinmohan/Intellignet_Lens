@@ -31,13 +31,12 @@ public class Inside_website extends AsyncTask<Void,Void,Void> {
     protected Void doInBackground(Void... voids) {
         try
         {
-            //a
             obj = data.get_items();                                                                  //fetching the saved list.
             int x = obj.size();                                                                     //Checking the size of the list [Debugging]
 
             for(int i=0;i<obj.size();i++){
 
-                if(i==478) {                                                                        //Page 478, 479 and 480 have no description. It ends up halting the app process.
+                if(i==485) {                                                                        //Page 485, 486 and 487 have no description. It ends up halting the app process.
                     i += 3;
                 }
 
@@ -68,7 +67,7 @@ public class Inside_website extends AsyncTask<Void,Void,Void> {
                 Elements paragraph = inner_dis.select("p");
                 String s = paragraph.text();;
 
-                obj.set(i,new Data(link,product_id,product_name,s));                                //adding the description to the main list.
+                 obj.set(i,new Data(link,product_id,product_name,s));                                //adding the description to the main list.
 
                 //-------------------------------------------------------
             }
