@@ -26,7 +26,6 @@ public class Inside_website extends AsyncTask<Void,Void,Void> {
 
     ArrayList<Data>obj = new ArrayList<Data>();
     Data data = new Data();
-    String resp;
     DatabaseReference mdatabase;
     @Override
     protected Void doInBackground(Void... voids) {
@@ -68,7 +67,7 @@ public class Inside_website extends AsyncTask<Void,Void,Void> {
                 Elements paragraph = inner_dis.select("p");
                 String s = paragraph.text();;
 
-                obj.set(i,new Data(link,product_id,product_name,s));                            //adding the description to the main list.
+                obj.set(i,new Data(link,product_id,product_name,s));                                //adding the description to the main list.
 
                 //-------------------------------------------------------
             }
@@ -76,8 +75,8 @@ public class Inside_website extends AsyncTask<Void,Void,Void> {
            data.save_items(obj);                                                                    //Saving the new List
 
             mdatabase = FirebaseDatabase.getInstance().getReference().child("Items");
-//
-//
+
+
             for(int i=0;i<obj.size();i++)
             {
                 String a,b,c,d;
