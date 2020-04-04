@@ -3,6 +3,7 @@ package com.example.intellignetlens;
 import java.util.ArrayList;
 
 public class Data{
+      public String pics;
       public String links;
       public String product_id;
       public String product_name;
@@ -15,7 +16,8 @@ public class Data{
     }
 
 
-    public Data(String links, String product_id, String product_name,String description){
+    public Data(String pics,String links, String product_id, String product_name,String description){
+        this.pics = pics;
         this.links = links;
         this.product_id = product_id;
         this.product_name = product_name;
@@ -61,4 +63,6 @@ public class Data{
     public String show_Product_id(){return product_id;}
 
     public String show_product_description(){return description;}
+
+    public String show_product_images(){return pics;}
 }

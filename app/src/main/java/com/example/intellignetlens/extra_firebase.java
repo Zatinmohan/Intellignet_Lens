@@ -6,8 +6,17 @@ public class extra_firebase {
     public String product_name;
     public String product_id;
     public String description;
+    public String images;
 
     public extra_firebase(){}
+
+    public String getImages() {
+        return images;
+    }
+
+    public void setImages(String images) {
+        this.images = images;
+    }
 
     public String getUrl() {
         return url;

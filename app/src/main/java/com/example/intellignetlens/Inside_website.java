@@ -56,6 +56,7 @@ public class Inside_website extends AsyncTask<Void,Void,Void> {
                 String link = obj.get(i).show_link();
                 String product_id = obj.get(i).show_Product_id();
                 String product_name = obj.get(i).show_Product_name();
+                String image = obj.get(i).show_product_images();
                 //-------------------------------------------------------
 
                 //-------------------------------------------------------
@@ -65,11 +66,10 @@ public class Inside_website extends AsyncTask<Void,Void,Void> {
                 Elements div_deep_content = div_content.select("div.col-sm-12");
                 Element inner_dis = div_deep_content.select("div.productspecs-inner").get(1);
                 Elements paragraph = inner_dis.select("p");
-                String s = paragraph.text();;
-
-                 obj.set(i,new Data(link,product_id,product_name,s));                                //adding the description to the main list.
-
+                String s = paragraph.text();
                 //-------------------------------------------------------
+
+                 obj.set(i,new Data(image,link,product_id,product_name,s));                                //adding the description to the main list.
             }
 
            data.save_items(obj);                                                                    //Saving the new List
@@ -79,11 +79,12 @@ public class Inside_website extends AsyncTask<Void,Void,Void> {
 
             for(int i=0;i<obj.size();i++)
             {
-                String a,b,c,d;
+                String a,b,c,d,e;
                 a=obj.get(i).show_link();
                 b=obj.get(i).show_Product_id();
                 c=obj.get(i).show_Product_name();
                 d=obj.get(i).show_product_description();
+                e=obj.get(i).show_product_images();
 
                 extra_firebase object = new extra_firebase();
 
@@ -91,6 +92,7 @@ public class Inside_website extends AsyncTask<Void,Void,Void> {
                 object.setProduct_id(b);
                 object.setProduct_name(c);
                 object.setUrl(a);
+                object.setImages(e);
 
                 mdatabase.child(b).setValue(object);
 

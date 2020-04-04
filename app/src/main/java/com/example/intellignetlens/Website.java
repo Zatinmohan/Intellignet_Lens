@@ -48,12 +48,12 @@ public class Website extends AsyncTask<Void,Void,Void> {
                 Elements div_child = form.select("div");
 
                 int count=1;
-                String str = "div#product-holder-"+count;                                               //used a counter wise listing.
+                String str = "div#product-holder-"+count;                                                       //used a counter wise listing.
 
-                for(int j=2;j<div_child.size();j++)                                                     //first and second link is not important
+                for(int j=2;j<div_child.size();j++)                                                             //first and second link is not important
                 {
                     Elements div = div_child.select(str);
-                    if(div.size()==0)                                                                   //if no division tag is found, then cut the loop.
+                    if(div.size()==0)                                                                           //if no division tag is found, then cut the loop.
                         break;
 
                     Elements link = div.select("a");
@@ -64,9 +64,20 @@ public class Website extends AsyncTask<Void,Void,Void> {
                     String product_name = Name.select("div.hlt-f").text();
                     String text = link.attr("href");
 
-                    text = "https:"+text;                                                           //link of the detailed product page.
+                    //------------------------------------------------------------------------------
+                    //                          Image
+
+                    Element pic_division = link.select("div").get(1);
+                    Elements pic_inner = pic_division.select("div.product-inner");
+                    Elements img_tag = pic_inner.select("img");
+                    String image = img_tag.attr("src").toString();
+                    image = "https:"+image;
+
+                    //------------------------------------------------------------------------------
+
+                    text = "https:"+text;                                                                       //link of the detailed product page.
                     //data.add_Data(text,product_id,product_name);
-                    ob.add(new Data(text,product_id,product_name,null));                 //description is null for now.
+                    ob.add(new Data(image,text,product_id,product_name,null));                       //description is null for now.
 
                     str = str.substring(0,19);
                     count++;

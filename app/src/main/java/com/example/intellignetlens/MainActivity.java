@@ -84,18 +84,17 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 content = search_bar.getText().toString();
-                Query query = mdatabase.orderByChild("product_name").endAt(content);
+                Query query = mdatabase.orderByChild("product_name").endAt(content);                        //Try to get that particular product if it ends with that name
                 String b = content;
                         query.addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 for(DataSnapshot snapshot: dataSnapshot.getChildren()){
-                                    String z = snapshot.child("product_name").getValue(String.class);
-                                    String t = z;
+                                    String z = snapshot.child("product_name").getValue(String.class);       //Gets the name of the product
 
-                                    if(z!=null && z.contains(content)){
-                                        String y = snapshot.child("description").getValue(String.class);
-                                        String x = snapshot.child("product_id").getValue(String.class);
+                                    if(z!=null && z.contains(content)){                                     //Check the given keyword is present or not
+                                        String y = snapshot.child("description").getValue(String.class);    //Get the description
+                                        String x = snapshot.child("product_id").getValue(String.class);     //Get the name
                                     }
 
                                 }
