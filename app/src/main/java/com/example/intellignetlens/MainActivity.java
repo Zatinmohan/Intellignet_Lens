@@ -1,16 +1,13 @@
 package com.example.intellignetlens;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -20,9 +17,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -37,7 +33,10 @@ public class MainActivity extends AppCompatActivity {
     Button button;
     TextView textView;
 
+    boolean found=false;
     TextInputEditText search_bar;
+    TextInputLayout textInputLayout;
+
     String content;
     //ImageView cropImageView;
 
@@ -47,7 +46,6 @@ public class MainActivity extends AppCompatActivity {
 
     //Uri filepath;
 
-    //private final int PICK_IMAGE_REQUEST = 71;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +55,19 @@ public class MainActivity extends AppCompatActivity {
         mdatabase = FirebaseDatabase.getInstance().getReference().child("Items");
 
         search_bar = findViewById(R.id.search_bar);
+        textInputLayout = findViewById(R.id.editlayout);
+
+        search_bar.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus)
+                    search_bar.setHint("Eg: Drill Machine");
+
+                else
+                    search_bar.setHint("Search");
+            }
+        });
+
         toolbar = findViewById(R.id.toolbar);
         button = (Button)findViewById(R.id.button);
 
@@ -67,8 +78,6 @@ public class MainActivity extends AppCompatActivity {
         camera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // chooseImage();
-
                 CropImage.activity()
                         .setGuidelines(CropImageView.Guidelines.ON)
                         .start(MainActivity.this);
@@ -84,29 +93,39 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 content = search_bar.getText().toString();
+
+                if(content.equals("Drill Machine") || content.equals("Drill Drivers"))                      //Drill machine is stored as Drill/Drivers
+                    content = "Drill/Driver";
+
                 Query query = mdatabase.orderByChild("product_name").endAt(content);                        //Try to get that particular product if it ends with that name
-                String b = content;
+//                String b = content;
                         query.addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 for(DataSnapshot snapshot: dataSnapshot.getChildren()){
                                     String z = snapshot.child("product_name").getValue(String.class);       //Gets the name of the product
 
-                                    if(z!=null && z.contains(content)){                                     //Check the given keyword is present or not
-                                        String y = snapshot.child("description").getValue(String.class);    //Get the description
-                                        String x = snapshot.child("product_id").getValue(String.class);     //Get the name
+                                    if(z!=null && z.contains(content)){
+                                        Intent intent = new Intent(MainActivity.this,ResultActivity.class);     //Check the given keyword is present or not
+                                        intent.putExtra("Content",content);
+                                        startActivity(intent);
+                                        found = true;
+                                        break;
                                     }
-
                                 }
+
+                                if(!found)
+                                    Toast.makeText(MainActivity.this, "Product Not Found", Toast.LENGTH_SHORT).show();
                             }
 
                             @Override
                             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                                Toast.makeText(MainActivity.this, databaseError.toString(), Toast.LENGTH_SHORT).show();
                             }
                         });
             }
         });
+
 
     }
 

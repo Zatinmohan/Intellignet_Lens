@@ -10,6 +10,12 @@ public class extra_firebase {
 
     public extra_firebase(){}
 
+    public extra_firebase(String product_id,String product_name,String images){
+        this.product_id = product_id;
+        this.product_name = product_name;
+        this.images = images;
+    }
+
     public String getImages() {
         return images;
     }
