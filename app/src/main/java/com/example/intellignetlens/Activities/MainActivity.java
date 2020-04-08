@@ -54,8 +54,8 @@ public class MainActivity extends AppCompatActivity {
     TextInputLayout textInputLayout;
 
     String content;
-    ImageView cropImageView;
-    TextView resultview;
+//    ImageView cropImageView;
+//    TextView resultview;
 
     DatabaseReference mdatabase;
     Toolbar toolbar;
@@ -69,19 +69,19 @@ public class MainActivity extends AppCompatActivity {
     FirebaseAutoMLRemoteModel remoteModel;                                                          // Get the Remote Image
     FirebaseVisionImage image;                                                                      //Send the Input Image
     FirebaseModelDownloadConditions conditions;                                                     //Set the condition to download models
-    FirebaseVisionOnDeviceAutoMLImageLabelerOptions.Builder optionBuilder;                           //??
-    FirebaseVisionImageLabeler labeler;                                                             //?
+    FirebaseVisionOnDeviceAutoMLImageLabelerOptions.Builder optionBuilder;                          // Which option is use to run the labeler local or remotely
+    FirebaseVisionImageLabeler labeler;                                                             //For running the image labeler
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        maxconf = 0;
+        maxconf = 0;                                                                                //Setting the Max Confidence 0
 
         mdatabase = FirebaseDatabase.getInstance().getReference().child("Items");
 
-        resultview = findViewById(R.id.results);
+        //resultview = findViewById(R.id.results);
 
         search_bar = findViewById(R.id.search_bar);
         textInputLayout = findViewById(R.id.editlayout);
@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         button = (Button)findViewById(R.id.button);
 
-        cropImageView = findViewById(R.id.profile_pic);
+        //cropImageView = findViewById(R.id.profile_pic);
 
         camera = findViewById(R.id.camera);
 

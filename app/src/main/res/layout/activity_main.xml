@@ -15,10 +15,10 @@
         android:id="@+id/toolbar"
         android:background="@drawable/toolbar_grad"/>
 
-    <ImageView
+    <!--ImageView
         android:layout_width="match_parent"
         android:layout_height="180dp"
-        android:id="@+id/profile_pic"/>
+        android:id="@+id/profile_pic"/-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -67,11 +67,11 @@
             android:layout_margin="10dp"
             android:id="@+id/button"/>
 
-        <TextView
+        <!--TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/results"
-            android:layout_margin="10dp"/>
+            android:layout_margin="10dp"/-->
     </LinearLayout>
 
 
