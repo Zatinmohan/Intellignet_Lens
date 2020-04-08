@@ -1,7 +1,9 @@
-package com.example.intellignetlens;
+package com.example.intellignetlens.Jsoup;
 
 import android.os.AsyncTask;
-import android.widget.TextView;
+
+import com.example.intellignetlens.Adapters.Data;
+import com.example.intellignetlens.Adapters.MainData;
 
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
@@ -10,10 +12,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
-import java.io.StringReader;
-import java.nio.file.attribute.UserPrincipalLookupService;
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class Website extends AsyncTask<Void,Void,Void> {

@@ -1,6 +1,8 @@
-package com.example.intellignetlens;
+package com.example.intellignetlens.Jsoup;
 
 import android.os.AsyncTask;
+
+import com.example.intellignetlens.Adapters.MainData;
 
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;

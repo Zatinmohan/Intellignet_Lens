@@ -1,4 +1,4 @@
-package com.example.intellignetlens;
+package com.example.intellignetlens.Adapters;
 
 public class extra_firebase {
 

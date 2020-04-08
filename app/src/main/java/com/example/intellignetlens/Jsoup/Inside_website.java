@@ -1,13 +1,9 @@
-package com.example.intellignetlens;
+package com.example.intellignetlens.Jsoup;
 
 import android.os.AsyncTask;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.database.DatabaseError;
+import com.example.intellignetlens.Adapters.Data;
+import com.example.intellignetlens.Adapters.extra_firebase;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 

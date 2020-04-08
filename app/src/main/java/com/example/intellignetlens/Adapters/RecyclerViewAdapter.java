@@ -1,4 +1,4 @@
-package com.example.intellignetlens;
+package com.example.intellignetlens.Adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.intellignetlens.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -38,8 +39,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         extra_firebase data = listItems.get(position);
         holder.product_id.setText(data.getProduct_id());
         holder.product_name.setText(data.getProduct_name());
-        String img = data.getImages();
-        Picasso.get().load(img).into(holder.product_image);
+        String img = data.getImages();                                                              //Getting the url of the images
+        Picasso.get().load(img).into(holder.product_image);                                         //Downloading the images from that particular url
     }
 
     @Override

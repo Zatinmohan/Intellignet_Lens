@@ -1,4 +1,4 @@
-package com.example.intellignetlens;
+package com.example.intellignetlens.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +8,12 @@ import android.widget.Button;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
+import com.example.intellignetlens.Jsoup.Category;
+import com.example.intellignetlens.Jsoup.Inside_website;
+import com.example.intellignetlens.R;
+import com.example.intellignetlens.Jsoup.Sub_Category;
+import com.example.intellignetlens.Jsoup.Website;
 
 public class resyncActivity extends AppCompatActivity {
 
@@ -30,7 +36,7 @@ public class resyncActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
             }
         });
         sync = findViewById(R.id.sync_button);
