@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -61,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
     Toolbar toolbar;
     ImageView camera;
 
+    ProgressDialog progressDialog;
     //Uri filepath;
 
     float maxconf;
@@ -78,13 +81,19 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         maxconf = 0;                                                                                //Setting the Max Confidence 0
-
+        int p;
         mdatabase = FirebaseDatabase.getInstance().getReference().child("Items");
 
         //resultview = findViewById(R.id.results);
 
         search_bar = findViewById(R.id.search_bar);
         textInputLayout = findViewById(R.id.editlayout);
+
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Searching....");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setCancelable(false);
 
         search_bar.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -111,55 +120,59 @@ public class MainActivity extends AppCompatActivity {
                         .setGuidelines(CropImageView.Guidelines.ON)
                         .start(MainActivity.this);
 
-                        fromRemoteModel();                                                              //Download the Remote Modal
+                fromRemoteModel();                                                              //Download the Remote Modal
 
             }
         });
 
         setSupportActionBar(toolbar);
 
-
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                found=false;
+                progressDialog.show();
                 content = search_bar.getText().toString();
-
-                if(content.equals("Drill Machine") || content.equals("Drill Drivers"))                      //Drill machine is stored as Drill/Drivers
+                if(content.equals("Drill Machine") || content.equals("Drill Drivers") || content.equals("Drill Machine ")|| content.equals("Drill Machines") || content.equals("Drill Machines."))                                  //Drill machine is stored as Drill/Drivers
                     content = "Drill/Driver";
 
-                Query query = mdatabase.orderByChild("product_name").endAt(content);                        //Try to get that particular product if it ends with that name
+                if(content.endsWith(" ") || content.endsWith("s")|| content.endsWith(".")){
+                    content = content.substring(0,content.length()-1);
+                    int bb=0;
+                }
+
+
+                Query query = mdatabase.orderByChild("product_name").endAt(content);                                    //Try to get that particular product if it ends with that name
 //                String b = content;
-                        query.addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                for(DataSnapshot snapshot: dataSnapshot.getChildren()){
-                                    String z = snapshot.child("product_name").getValue(String.class);       //Gets the name of the product
+                query.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for(DataSnapshot snapshot: dataSnapshot.getChildren()){
+                            String z = snapshot.child("product_name").getValue(String.class);                           //Gets the name of the product
 
-                                    if(z!=null && z.contains(content)){
-                                        Intent intent = new Intent(MainActivity.this, ResultActivity.class);     //Check the given keyword is present or not
-                                        intent.putExtra("Content",content);
-                                        startActivity(intent);
-                                        found = true;
-                                        break;
-                                    }
-                                }
-
-                                if(!found)
-                                    Toast.makeText(MainActivity.this, "Product Not Found", Toast.LENGTH_SHORT).show();
+                            if(z!=null && z.contains(content)){
+                                Intent intent = new Intent(MainActivity.this, ResultActivity.class);     //Check the given keyword is present or not
+                                intent.putExtra("Content",content);
+                                startActivity(intent);
+                                progressDialog.cancel();
+                                found = true;
+                                break;
                             }
+                        }
+                        if(!found) {
+                            progressDialog.cancel();
+                            Toast.makeText(MainActivity.this, "Product Not Found", Toast.LENGTH_SHORT).show();
+                        }
+                    }
 
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {
-                                Toast.makeText(MainActivity.this, databaseError.toString(), Toast.LENGTH_SHORT).show();
-                            }
-                        });
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        Toast.makeText(MainActivity.this, databaseError.toString(), Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
-
-
     }
-
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -168,7 +181,7 @@ public class MainActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
 
                 Uri resultUri = result.getUri();                                                            //Getting Image File Path
-                //cropImageView.setImageURI(resultUri);
+                //cropImageView.setImageURI(resultUri);                                                     //For Testing Purpose
                 setLabelerFromRemoteLabel(resultUri);                                                       //Getting Labels of the Dataset from Remote Data-set.
 
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
@@ -231,7 +244,7 @@ public class MainActivity extends AppCompatActivity {
                         maxconf = confidence;
                         Namez = eachlabel;
                     }
-                    //resultview.append(eachlabel + " - " + ("" + confidence*100).subSequence(0,4) + "%" + "\n\n");
+                    //resultview.append(eachlabel + " - " + ("" + confidence*100).subSequence(0,4) + "%" + "\n\n");                         //Show confidence percentage level with label of the product
                 }
 
                 SearchAgain();
@@ -247,6 +260,8 @@ public class MainActivity extends AppCompatActivity {
     private void SearchAgain(){
         Namez = Namez.replace("_","-");                                                     //ID's of product contains "-" and MLkit doesn't allow "-".
 
+        progressDialog.show();
+        found=false;
         Query query = mdatabase.orderByChild("product_id").equalTo(Namez);
         query.addValueEventListener(new ValueEventListener() {
             @Override
@@ -258,10 +273,16 @@ public class MainActivity extends AppCompatActivity {
                     if(z!=null && z.contains(Namez)){
                         String n = snapshot.child("product_name").getValue(String.class);                       //Getting the name of the product.
                         Intent intent = new Intent(MainActivity.this, ResultActivity.class);
-                        intent.putExtra("Content",n);
+                        intent.putExtra("Content",n);                                                    //Sending ID to the Result Activity
                         startActivity(intent);
+                        progressDialog.cancel();
                         found = true;
                         break;
+                    }
+
+                    if(!found) {
+                        progressDialog.cancel();
+                        Toast.makeText(MainActivity.this, "Not Found!", Toast.LENGTH_SHORT).show();
                     }
                 }
 

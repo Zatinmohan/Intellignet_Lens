@@ -1,6 +1,9 @@
 package com.example.intellignetlens.Activities;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,8 +32,10 @@ public class ResultActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     RecyclerViewAdapter recyclerViewAdapter;
     CardView cardView;
+    //ProgressBar progressBar;
 
-    List<extra_firebase>itemlist = new ArrayList<>();                                                   //List the coantain the foudn items
+    List<extra_firebase>itemlist;                                                                       //List the coantain the foudn items
+    boolean isFound=false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,6 +44,7 @@ public class ResultActivity extends AppCompatActivity {
 
         content = getIntent().getStringExtra("Content");                                        // Get the Search title
 
+        //progressBar = findViewById(R.id.progressbar);
         recyclerView = (RecyclerView)findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -47,11 +53,14 @@ public class ResultActivity extends AppCompatActivity {
 
         mdatabase = FirebaseDatabase.getInstance().getReference().child("Items");                   //Database Connectivity
 
+        itemlist= new ArrayList<>();
         Query query = mdatabase.orderByChild("product_name").endAt(content);                        //Try to get that particular product if it ends with that name
 
         query.addValueEventListener(new ValueEventListener() {
+
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                //progressBar.setVisibility(View.VISIBLE);
                 for(DataSnapshot snapshot : dataSnapshot.getChildren())
                 {
                     String z = snapshot.child("product_name").getValue(String.class);               //Gets the name of the product
@@ -62,11 +71,13 @@ public class ResultActivity extends AppCompatActivity {
                         String img = snapshot.child("images").getValue(String.class);               //Get Images url
 
                         itemlist.add(new extra_firebase(x,z,img));
+                        isFound=true;
                     }
                 }
 
-                recyclerViewAdapter = new RecyclerViewAdapter(itemlist,ResultActivity.this);
-                recyclerView.setAdapter(recyclerViewAdapter);                                           //filling adapter
+                    recyclerViewAdapter = new RecyclerViewAdapter(itemlist, ResultActivity.this);
+                    recyclerView.setAdapter(recyclerViewAdapter);                                           //filling adapter
+                    //progressBar.setVisibility(View.INVISIBLE);
             }
 
             @Override
