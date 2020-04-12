@@ -35,7 +35,7 @@ public class DetailActivity extends AppCompatActivity {
         String desp = getIntent().getStringExtra("ProductDesp");
         String imgurl = getIntent().getStringExtra("ProductImage");
 
-        product_id.setText(id);
+       product_id.setText(id);
         productName.setText(name);
         productDescription.setText(desp);
         Picasso.get().load(imgurl).into(productImage);
