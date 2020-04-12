@@ -3,10 +3,13 @@ package com.example.intellignetlens.Activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
@@ -112,15 +115,21 @@ public class MainActivity extends AppCompatActivity {
         //cropImageView = findViewById(R.id.profile_pic);
 
         camera = findViewById(R.id.camera);
-
         camera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CropImage.activity()
-                        .setGuidelines(CropImageView.Guidelines.ON)
-                        .start(MainActivity.this);
+                if(ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA)!= PackageManager.PERMISSION_GRANTED){
+                    ActivityCompat.requestPermissions(MainActivity.this,new String[]{Manifest.permission.CAMERA},1);
+                }
 
-                fromRemoteModel();                                                              //Download the Remote Modal
+                if(ActivityCompat.checkSelfPermission(getApplicationContext(),Manifest.permission.CAMERA)==PackageManager.PERMISSION_GRANTED) {
+                    CropImage.activity()
+                            .setAllowRotation(true)
+                            .setGuidelines(CropImageView.Guidelines.ON)
+                            .start(MainActivity.this);
+
+                    fromRemoteModel();                                                              //Download the Remote Modal
+                }
 
             }
         });
