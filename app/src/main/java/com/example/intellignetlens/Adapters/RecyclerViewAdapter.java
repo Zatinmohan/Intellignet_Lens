@@ -1,6 +1,7 @@
 package com.example.intellignetlens.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,14 +11,20 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.intellignetlens.Activities.DetailActivity;
+import com.example.intellignetlens.Activities.ResultActivity;
 import com.example.intellignetlens.R;
+import com.eyalbira.loadingdots.LoadingDots;
 import com.squareup.picasso.Picasso;
+
+import org.w3c.dom.Text;
 
 import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>{
 
     private List<extra_firebase>listItems;
+    extra_firebase object = new extra_firebase();
     private Context context;
 
     public RecyclerViewAdapter(List<extra_firebase> listItems,Context context){
@@ -54,11 +61,27 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         public TextView product_id;
         public ImageView product_image;
 
-        public ViewHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull final View itemView) {
             super(itemView);
+            final Context c = itemView.getContext();
             product_id = (TextView)itemView.findViewById(R.id.product_id);
             product_name = (TextView)itemView.findViewById(R.id.product_name);
             product_image = (ImageView)itemView.findViewById(R.id.product_image);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                  int pos = getAdapterPosition();
+
+                  Intent intent = new Intent(context,DetailActivity.class);
+                  intent.putExtra("ProductName",listItems.get(pos).getProduct_name());
+                  intent.putExtra("ProductID",listItems.get(pos).getProduct_id());
+                  intent.putExtra("ProductDesp",listItems.get(pos).getDescription());
+                  intent.putExtra("ProductImage",listItems.get(pos).getImages());
+
+                  context.startActivity(intent);
+                }
+            });
         }
     }
 }

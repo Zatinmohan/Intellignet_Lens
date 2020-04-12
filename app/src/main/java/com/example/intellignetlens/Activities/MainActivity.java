@@ -138,12 +138,10 @@ public class MainActivity extends AppCompatActivity {
 
                 if(content.endsWith(" ") || content.endsWith("s")|| content.endsWith(".")){
                     content = content.substring(0,content.length()-1);
-                    int bb=0;
                 }
 
 
                 Query query = mdatabase.orderByChild("product_name").endAt(content);                                    //Try to get that particular product if it ends with that name
-//                String b = content;
                 query.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

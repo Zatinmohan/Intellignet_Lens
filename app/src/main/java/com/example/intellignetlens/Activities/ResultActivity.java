@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.intellignetlens.R;
 import com.example.intellignetlens.Adapters.RecyclerViewAdapter;
 import com.example.intellignetlens.Adapters.extra_firebase;
+import com.eyalbira.loadingdots.LoadingDots;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -33,6 +34,7 @@ public class ResultActivity extends AppCompatActivity {
     RecyclerViewAdapter recyclerViewAdapter;
     CardView cardView;
     //ProgressBar progressBar;
+    LoadingDots loadingDots;
 
     List<extra_firebase>itemlist;                                                                       //List the coantain the foudn items
     boolean isFound=false;
@@ -45,6 +47,7 @@ public class ResultActivity extends AppCompatActivity {
         content = getIntent().getStringExtra("Content");                                        // Get the Search title
 
         //progressBar = findViewById(R.id.progressbar);
+        loadingDots = findViewById(R.id.loadingdots);
         recyclerView = (RecyclerView)findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -60,6 +63,7 @@ public class ResultActivity extends AppCompatActivity {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                loadingDots.setVisibility(View.VISIBLE);
                 //progressBar.setVisibility(View.VISIBLE);
                 for(DataSnapshot snapshot : dataSnapshot.getChildren())
                 {
@@ -70,14 +74,14 @@ public class ResultActivity extends AppCompatActivity {
                         String x = snapshot.child("product_id").getValue(String.class);             //Get the Product ID
                         String img = snapshot.child("images").getValue(String.class);               //Get Images url
 
-                        itemlist.add(new extra_firebase(x,z,img));
+                        itemlist.add(new extra_firebase(x,z,img,y));
                         isFound=true;
                     }
                 }
 
                     recyclerViewAdapter = new RecyclerViewAdapter(itemlist, ResultActivity.this);
                     recyclerView.setAdapter(recyclerViewAdapter);                                           //filling adapter
-                    //progressBar.setVisibility(View.INVISIBLE);
+                    loadingDots.setVisibility(View.GONE);
             }
 
             @Override

@@ -10,14 +10,16 @@ public class extra_firebase {
     public String product_id;
     public String description;
     public String images;
-    //public static List<extra_firebase>list = new ArrayList<>();
+//    public static List<extra_firebase>list = new ArrayList<>();
+//    public static int pos;
 
     public extra_firebase(){}
 
-    public extra_firebase(String product_id,String product_name,String images){
+    public extra_firebase(String product_id,String product_name,String images,String description){
         this.product_id = product_id;
         this.product_name = product_name;
         this.images = images;
+        this.description = description;
     }
 
     public String getImages() {
@@ -60,11 +62,20 @@ public class extra_firebase {
         this.description = description;
     }
 
-//    public void saveList(List<extra_firebase>list){
+//    public void saveList(List<extra_firebase>list,int pos){
 //        this.list=list;
+//        this.pos=pos;
 //    }
 //
 //    public List<extra_firebase> getList(){
 //        return list;
+//    }
+//
+//    public void clearList(){
+//        this.list.clear();
+//        this.pos=-1;
+//    }
+//    public int returnPos(){
+//        return pos;
 //    }
 }
