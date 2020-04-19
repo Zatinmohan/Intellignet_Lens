@@ -1,8 +1,5 @@
 package com.example.intellignetlens.Adapters;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class extra_firebase {
 
     public String url;
@@ -10,16 +7,15 @@ public class extra_firebase {
     public String product_id;
     public String description;
     public String images;
-//    public static List<extra_firebase>list = new ArrayList<>();
-//    public static int pos;
 
     public extra_firebase(){}
 
-    public extra_firebase(String product_id,String product_name,String images,String description){
+    public extra_firebase(String product_id,String product_name,String images,String description,String url){
         this.product_id = product_id;
         this.product_name = product_name;
         this.images = images;
         this.description = description;
+        this.url = url;
     }
 
     public String getImages() {
@@ -61,21 +57,4 @@ public class extra_firebase {
     public void setDescription(String description) {
         this.description = description;
     }
-
-//    public void saveList(List<extra_firebase>list,int pos){
-//        this.list=list;
-//        this.pos=pos;
-//    }
-//
-//    public List<extra_firebase> getList(){
-//        return list;
-//    }
-//
-//    public void clearList(){
-//        this.list.clear();
-//        this.pos=-1;
-//    }
-//    public int returnPos(){
-//        return pos;
-//    }
 }

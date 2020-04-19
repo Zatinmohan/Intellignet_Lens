@@ -7,24 +7,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.intellignetlens.Activities.DetailActivity;
-import com.example.intellignetlens.Activities.ResultActivity;
 import com.example.intellignetlens.R;
-import com.eyalbira.loadingdots.LoadingDots;
 import com.squareup.picasso.Picasso;
-
-import org.w3c.dom.Text;
-
 import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>{
 
     private List<extra_firebase>listItems;
-    extra_firebase object = new extra_firebase();
     private Context context;
 
     public RecyclerViewAdapter(List<extra_firebase> listItems,Context context){
@@ -78,7 +70,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                   intent.putExtra("ProductID",listItems.get(pos).getProduct_id());
                   intent.putExtra("ProductDesp",listItems.get(pos).getDescription());
                   intent.putExtra("ProductImage",listItems.get(pos).getImages());
-
+                  intent.putExtra("ProductURL",listItems.get(pos).getUrl());
                   context.startActivity(intent);
                 }
             });

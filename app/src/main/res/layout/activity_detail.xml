@@ -98,6 +98,16 @@
                     android:layout_margin="5dp"
                     android:textSize="23sp"/>
 
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Know More"
+                    android:background="@drawable/rounded_redirect"
+                    android:id="@+id/redirect"
+                    android:textColor="#FFF"
+                    android:padding="16dp"
+                    android:layout_margin="10dp"/>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
     </androidx.core.widget.NestedScrollView>

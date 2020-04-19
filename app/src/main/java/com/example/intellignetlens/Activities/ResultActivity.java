@@ -2,7 +2,6 @@ package com.example.intellignetlens.Activities;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -11,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.intellignetlens.R;
 import com.example.intellignetlens.Adapters.RecyclerViewAdapter;
 import com.example.intellignetlens.Adapters.extra_firebase;
@@ -22,7 +20,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +30,6 @@ public class ResultActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     RecyclerViewAdapter recyclerViewAdapter;
     CardView cardView;
-    //ProgressBar progressBar;
     LoadingDots loadingDots;
 
     List<extra_firebase>itemlist;                                                                       //List the coantain the foudn items
@@ -46,7 +42,6 @@ public class ResultActivity extends AppCompatActivity {
 
         content = getIntent().getStringExtra("Content");                                        // Get the Search title
 
-        //progressBar = findViewById(R.id.progressbar);
         loadingDots = findViewById(R.id.loadingdots);
         recyclerView = (RecyclerView)findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
@@ -73,8 +68,8 @@ public class ResultActivity extends AppCompatActivity {
                         String y = snapshot.child("description").getValue(String.class);            //Get the description
                         String x = snapshot.child("product_id").getValue(String.class);             //Get the Product ID
                         String img = snapshot.child("images").getValue(String.class);               //Get Images url
-
-                        itemlist.add(new extra_firebase(x,z,img,y));
+                        String url = snapshot.child("url").getValue(String.class);                  //Getting Page url.
+                        itemlist.add(new extra_firebase(x,z,img,y,url));
                         isFound=true;
                     }
                 }
@@ -86,7 +81,7 @@ public class ResultActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                Toast.makeText(ResultActivity.this, databaseError.toString(), Toast.LENGTH_SHORT).show();
             }
         });
     }

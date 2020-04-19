@@ -34,7 +34,7 @@ public class Category extends AsyncTask<Void,Void,Void> {
 
             Elements body = document.select("body.category");
             Elements div1 = body.select("div#page");
-            Element section1 = div1.select("section").get(7);                                       //7th division tag we need.
+            Element section1 = div1.select("section").get(7);                                       //We need 7th division tag
             Element div2 = section1.select("div").get(0);
             Elements links = div2.select("a");
            for(int i=0;i<links.size();i++)
@@ -53,4 +53,6 @@ public class Category extends AsyncTask<Void,Void,Void> {
         }
         return null;
     }
+
+
 }

@@ -91,12 +91,12 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
-                            android:layout_marginRight="10dp"
-                            android:id="@+id/username">
+                            android:layout_marginRight="10dp">
                             <com.google.android.material.textfield.TextInputEditText
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:hint="User ID"
+                                android:id="@+id/username"
                                 android:inputType="textCapCharacters"/>
                         </com.google.android.material.textfield.TextInputLayout>
 

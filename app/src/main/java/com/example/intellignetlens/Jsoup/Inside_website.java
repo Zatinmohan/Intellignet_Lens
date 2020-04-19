@@ -32,7 +32,7 @@ public class Inside_website extends AsyncTask<Void,Void,Void> {
 
             for(int i=0;i<obj.size();i++){
 
-                if(i==485) {                                                                        //Page 485, 486 and 487 have no description. It ends up halting the app process.
+                if(i==488) {                                                                        //Page 486, 487 and 488 have no description. It ends up halting the app process.
                     i += 3;
                 }
 
@@ -65,7 +65,8 @@ public class Inside_website extends AsyncTask<Void,Void,Void> {
                 String s = paragraph.text();
                 //-------------------------------------------------------
 
-                 obj.set(i,new Data(image,link,product_id,product_name,s));                                //adding the description to the main list.
+                if(s!=null)
+                    obj.set(i,new Data(image,link,product_id,product_name,s));                                //adding the description to the main list.
             }
 
            data.save_items(obj);                                                                    //Saving the new List

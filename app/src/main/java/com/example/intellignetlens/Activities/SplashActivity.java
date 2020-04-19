@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.intellignetlens.R;
 
 public class SplashActivity extends AppCompatActivity {
-    private static int SPLASH_TIME_OUT=2000;
+    private static int SPLASH_TIME_OUT=2000;                                                        // 2 Seconds
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

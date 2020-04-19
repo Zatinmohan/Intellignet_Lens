@@ -4,11 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
 import com.example.intellignetlens.Jsoup.Category;
 import com.example.intellignetlens.Jsoup.Inside_website;
 import com.example.intellignetlens.R;

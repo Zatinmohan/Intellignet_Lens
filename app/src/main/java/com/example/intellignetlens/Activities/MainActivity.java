@@ -18,17 +18,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.intellignetlens.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -49,6 +47,7 @@ import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.jar.Attributes;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -67,10 +66,9 @@ public class MainActivity extends AppCompatActivity {
     ImageView camera;
 
     ProgressDialog progressDialog;
-    //Uri filepath;
 
     float maxconf;
-    String Namez;
+    String Namez=null;
 
     FirebaseAutoMLRemoteModel remoteModel;                                                          // Get the Remote Image
     FirebaseVisionImage image;                                                                      //Send the Input Image
@@ -84,7 +82,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         maxconf = 0;                                                                                //Setting the Max Confidence 0
-        int p;
         mdatabase = FirebaseDatabase.getInstance().getReference().child("Items");
 
         //resultview = findViewById(R.id.results);
@@ -96,7 +93,6 @@ public class MainActivity extends AppCompatActivity {
         progressDialog.setMessage("Searching....");
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.setIndeterminate(true);
-        progressDialog.setCancelable(false);
 
         search_bar.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -191,7 +187,7 @@ public class MainActivity extends AppCompatActivity {
                 //cropImageView.setImageURI(resultUri);                                                     //For Testing Purpose
                 setLabelerFromRemoteLabel(resultUri);                                                       //Getting Labels of the Dataset from Remote Data-set.
 
-            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+            } else if(resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE){
                 Exception error = result.getError();
                 Toast.makeText(this, error.getMessage(), Toast.LENGTH_SHORT).show();
             }
@@ -199,14 +195,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void fromRemoteModel(){
-        remoteModel = new FirebaseAutoMLRemoteModel.Builder("Products_202048165812").build();           //Machine Learning Data Set Model Name.
+        remoteModel = new FirebaseAutoMLRemoteModel.Builder("Products_2020420242").build();           //Machine Learning Data Set Model Name.
         conditions = new FirebaseModelDownloadConditions.Builder().requireWifi().build();                   //Requires Wifi do Download Dataset.
 
         FirebaseModelManager.getInstance().download(remoteModel,conditions)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        //Toast.makeText(MainActivity.this, "Download", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(MainActivity.this, "Download", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
@@ -241,7 +237,7 @@ public class MainActivity extends AppCompatActivity {
         labeler.processImage(image).addOnCompleteListener(new OnCompleteListener<List<FirebaseVisionImageLabel>>() {
             @Override
             public void onComplete(@NonNull Task<List<FirebaseVisionImageLabel>> task) {
-                //Toast.makeText(MainActivity.this, "Done!", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(MainActivity.this, "Done!", Toast.LENGTH_SHORT).show();
 
                 for(FirebaseVisionImageLabel label : task.getResult()){
                     String eachlabel = label.getText().toUpperCase();
@@ -265,11 +261,31 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void SearchAgain(){
-        Namez = Namez.replace("_","-");                                                     //ID's of product contains "-" and MLkit doesn't allow "-".
+
+        if(Namez.equals("GAM_270_MFL")||Namez.equals("GLM_50_CX"))
+            Namez = Namez.replaceAll("_"," ");
+
+        else if(Namez.equals("GBH18V_26_Overview") || Namez.equals("GDX18V_1800C_Overview") || Namez.equals("GLM_30") || Namez.equals("GLM_42")||Namez.equals("LR_6")) {
+            for(int xx=Namez.length()-1;xx>=0;xx--){
+                if(Namez.charAt(xx)=='_'){
+                    Namez = Namez.substring(0,xx-1)+' '+ Namez.substring(xx);
+                    break;
+                }
+            }
+        }
+        else
+            Namez = Namez.replace("_","-");                                                     //ID's of product contains "-" and MLkit doesn't allow "-".
+
+        for(int xx=Namez.length()-1;xx>=0;xx--){
+            if(Namez.charAt(xx)=='-'){
+                Namez = Namez.substring(0,xx);
+                break;
+            }
+        }
 
         progressDialog.show();
         found=false;
-        Query query = mdatabase.orderByChild("product_id").equalTo(Namez);
+        Query query = mdatabase.orderByChild("product_id").startAt(Namez);
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -279,6 +295,8 @@ public class MainActivity extends AppCompatActivity {
 
                     if(z!=null && z.contains(Namez)){
                         String n = snapshot.child("product_name").getValue(String.class);                       //Getting the name of the product.
+
+                        //if(n.contains("Overview"))
                         Intent intent = new Intent(MainActivity.this, ResultActivity.class);
                         intent.putExtra("Content",n);                                                    //Sending ID to the Result Activity
                         startActivity(intent);
@@ -286,11 +304,10 @@ public class MainActivity extends AppCompatActivity {
                         found = true;
                         break;
                     }
-
-                    if(!found) {
-                        progressDialog.cancel();
-                        Toast.makeText(MainActivity.this, "Not Found!", Toast.LENGTH_SHORT).show();
-                    }
+                }
+                if(!found) {
+                    progressDialog.cancel();
+                    Toast.makeText(MainActivity.this, "Not Found!", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -318,7 +335,11 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
             case R.id.logout:
-                Toast.makeText(this, "Clicked 2", Toast.LENGTH_SHORT).show();
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(MainActivity.this,LoginActivity.class);
+                Toast.makeText(this, "Log-out Successfully", Toast.LENGTH_SHORT).show();
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
                 break;
         }
 
