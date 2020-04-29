@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
     ProgressDialog progressDialog;
 
     float maxconf;
-    String Namez=null;
+    String Namez;
 
     FirebaseAutoMLRemoteModel remoteModel;                                                          // Get the Remote Image
     FirebaseVisionImage image;                                                                      //Send the Input Image
@@ -81,7 +81,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        maxconf = 0;                                                                                //Setting the Max Confidence 0
+        maxconf = 0;
+        Namez="";          //Setting the Max Confidence 0
         mdatabase = FirebaseDatabase.getInstance().getReference().child("Items");
 
         //resultview = findViewById(R.id.results);
@@ -179,6 +180,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode,resultCode,data);
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK) {
@@ -195,7 +197,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void fromRemoteModel(){
-        remoteModel = new FirebaseAutoMLRemoteModel.Builder("Products_2020420242").build();           //Machine Learning Data Set Model Name.
+        remoteModel = new FirebaseAutoMLRemoteModel.Builder("Products_20204192466").build();           //Machine Learning Data Set Model Name.
         conditions = new FirebaseModelDownloadConditions.Builder().requireWifi().build();                   //Requires Wifi do Download Dataset.
 
         FirebaseModelManager.getInstance().download(remoteModel,conditions)
@@ -302,6 +304,7 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(intent);
                         progressDialog.cancel();
                         found = true;
+                        //Namez="";
                         break;
                     }
                 }
@@ -344,5 +347,12 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return true;
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+
     }
 }

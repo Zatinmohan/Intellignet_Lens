@@ -1,7 +1,10 @@
 package com.example.intellignetlens.Activities;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -20,6 +23,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,16 +35,36 @@ public class ResultActivity extends AppCompatActivity {
     RecyclerViewAdapter recyclerViewAdapter;
     CardView cardView;
     LoadingDots loadingDots;
+    TextView total;
+    TextView compare;
 
-    List<extra_firebase>itemlist;                                                                       //List the coantain the foudn items
+    CheckBox checkBox;
+    List<extra_firebase>itemlist;                                                                   //List the coantain the foudn items
     boolean isFound=false;
+
+    int m=0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_productlist);
 
-        content = getIntent().getStringExtra("Content");                                        // Get the Search title
+        compare = findViewById(R.id.compare);
+
+        compare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(compare.getCurrentTextColor()==Color.parseColor("#e52d27"))            //Checking the Color
+                    Toast.makeText(ResultActivity.this, "Comparable", Toast.LENGTH_SHORT).show();
+                else
+                    Toast.makeText(ResultActivity.this, "Please choose only 2 products", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+        total = findViewById(R.id.total);
+
+        content = getIntent().getStringExtra("Content");                                      // Get the Search title
 
         loadingDots = findViewById(R.id.loadingdots);
         recyclerView = (RecyclerView)findViewById(R.id.recyclerView);
@@ -74,9 +98,14 @@ public class ResultActivity extends AppCompatActivity {
                     }
                 }
 
-                    recyclerViewAdapter = new RecyclerViewAdapter(itemlist, ResultActivity.this);
-                    recyclerView.setAdapter(recyclerViewAdapter);                                           //filling adapter
+                    recyclerViewAdapter = new RecyclerViewAdapter(itemlist, ResultActivity.this,compare);
+                    recyclerView.setAdapter(recyclerViewAdapter);                                   //filling adapter
+                    String size = String.valueOf(itemlist.size());
+                    total.setText("Total Results : " + size);
                     loadingDots.setVisibility(View.GONE);
+
+
+
             }
 
             @Override

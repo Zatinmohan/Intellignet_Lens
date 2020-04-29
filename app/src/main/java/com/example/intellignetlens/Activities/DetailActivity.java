@@ -18,7 +18,6 @@ public class DetailActivity extends AppCompatActivity {
     TextView productName;
     TextView productDescription;
     ImageView productImage;
-
     Button redirect;
 
     @Override

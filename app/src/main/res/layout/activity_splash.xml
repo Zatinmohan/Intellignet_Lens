@@ -9,7 +9,7 @@
        android:layout_height="200dp"
        android:layout_width="wrap_content"
        android:layout_gravity="center"
-       android:src="@drawable/logo"
+       android:src="@drawable/bosch_logo"
        android:padding="20dp"
        android:layout_marginTop="20dp"
        android:layout_marginRight="20dp"
