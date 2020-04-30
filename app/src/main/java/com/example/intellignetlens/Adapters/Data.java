@@ -3,13 +3,13 @@ package com.example.intellignetlens.Adapters;
 import java.util.ArrayList;
 
 public class Data{
-      public String pics;
-      public String links;
-      public String product_id;
-      public String product_name;
-      public String description=null;
-      String tag;
-      public static ArrayList<Data>items = new ArrayList<Data>();
+      public String pics;                                                                           //Image URL
+      public String links;                                                                          //Page Links
+      public String product_id;                                                                     //Product ID
+      public String product_name;                                                                   //Product Name
+      public String description=null;                                                               //Product Description
+      String desp1,desp2,desp3;                                                                     //Comparison Point
+      public static ArrayList<Data>items = new ArrayList<Data>();                                      //List to save those products
 
     public Data(){ }
 

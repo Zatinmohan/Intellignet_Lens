@@ -1,5 +1,6 @@
 package com.example.intellignetlens.Activities;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -42,8 +43,6 @@ public class ResultActivity extends AppCompatActivity {
     List<extra_firebase>itemlist;                                                                   //List the coantain the foudn items
     boolean isFound=false;
 
-    int m=0;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,16 +50,17 @@ public class ResultActivity extends AppCompatActivity {
 
         compare = findViewById(R.id.compare);
 
-        compare.setOnClickListener(new View.OnClickListener() {
+        /*compare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(compare.getCurrentTextColor()==Color.parseColor("#e52d27"))            //Checking the Color
-                    Toast.makeText(ResultActivity.this, "Comparable", Toast.LENGTH_SHORT).show();
-                else
-                    Toast.makeText(ResultActivity.this, "Please choose only 2 products", Toast.LENGTH_SHORT).show();
+                if(compare.getCurrentTextColor()==Color.parseColor("#e52d27")) {            //Checking the Color
+                    startActivity(new Intent(ResultActivity.this, CompareActivity.class));
 
+                }
+                else
+                    Toast.makeText(ResultActivity.this, "Only 2 products can be compared at a time", Toast.LENGTH_SHORT).show();
             }
-        });
+        });*/
 
         total = findViewById(R.id.total);
 

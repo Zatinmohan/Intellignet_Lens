@@ -55,6 +55,8 @@ public class Website extends AsyncTask<Void,Void,Void> {
                     if(div.size()==0)                                                                           //if no division tag is found, then cut the loop.
                         break;
 
+                    //------------------------------------------------------------------------------
+                    //                          Product ID and Name
                     Elements link = div.select("a");
                     Element text_name = link.select("div").get(2);
                     Elements Name = text_name.select("div.product-inner");
@@ -62,17 +64,41 @@ public class Website extends AsyncTask<Void,Void,Void> {
                     String product_id = Name.select("div.hlt-e").text();
                     String product_name = Name.select("div.hlt-f").text();
                     String text = link.attr("href");
+                    //------------------------------------------------------------------------------
 
                     //------------------------------------------------------------------------------
                     //                          Image
-
                     Element pic_division = link.select("div").get(1);
                     Elements pic_inner = pic_division.select("div.product-inner");
                     Elements img_tag = pic_inner.select("img");
                     String image = img_tag.attr("src").toString();
                     image = "https:"+image;
+                    //------------------------------------------------------------------------------
 
                     //------------------------------------------------------------------------------
+                    //                          Compare Points
+                    Elements ul = Name.select("ul");
+                    Elements li = ul.select("li");
+
+                    if(li.size()>=3) {
+                        String a = li.select("li").get(0).text();
+                        String b = li.select("li").get(1).text();
+                        String c = li.select("li").get(2).text();
+                    }
+
+                    else if(li.size()==2){
+                        String a = li.select("li").get(0).text();
+                        String b = li.select("li").get(1).text();
+                        String c = "null";
+                    }
+
+                    else{
+                        String a = li.select("li").get(0).text();
+                        String b = "null";
+                        String c = "null";
+                    }
+                    //------------------------------------------------------------------------------
+
 
                     text = "https:"+text;                                                                       //link of the detailed product page.
                     //data.add_Data(text,product_id,product_name);
