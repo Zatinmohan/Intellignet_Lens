@@ -77,32 +77,37 @@ public class Website extends AsyncTask<Void,Void,Void> {
 
                     //------------------------------------------------------------------------------
                     //                          Compare Points
+                    String a, b, c;
                     Elements ul = Name.select("ul");
+                    int xxx=1;
                     Elements li = ul.select("li");
-
-                    if(li.size()>=3) {
-                        String a = li.select("li").get(0).text();
-                        String b = li.select("li").get(1).text();
-                        String c = li.select("li").get(2).text();
-                    }
-
-                    else if(li.size()==2){
-                        String a = li.select("li").get(0).text();
-                        String b = li.select("li").get(1).text();
-                        String c = "null";
+                    if(li.size()>1) {
+                        if (li.size() >= 3) {
+                            a = li.select("li").get(0).text();
+                            b = li.select("li").get(1).text();
+                            c = li.select("li").get(2).text();
+                        } else if (li.size() == 2) {
+                            a = li.select("li").get(0).text();
+                            b = li.select("li").get(1).text();
+                            c = "null";
+                        } else {
+                            a = li.select("li").get(0).text();
+                            b = "null";
+                            c = "null";
+                        }
                     }
 
                     else{
-                        String a = li.select("li").get(0).text();
-                        String b = "null";
-                        String c = "null";
+                        a="null";
+                        b="null";
+                        c="null";
                     }
                     //------------------------------------------------------------------------------
 
 
                     text = "https:"+text;                                                                       //link of the detailed product page.
                     //data.add_Data(text,product_id,product_name);
-                    ob.add(new Data(image,text,product_id,product_name,null));                       //description is null for now.
+                    ob.add(new Data(image,text,product_id,product_name,null,a,b,c));                       //description is null for now.
 
                     str = str.substring(0,19);
                     count++;

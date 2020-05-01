@@ -32,7 +32,7 @@ public class Inside_website extends AsyncTask<Void,Void,Void> {
 
             for(int i=0;i<obj.size();i++){
 
-                if(i==488) {                                                                        //Page 486, 487 and 488 have no description. It ends up halting the app process.
+                if(i==478) {                                                                        //Page 486, 487 and 488 have no description. It ends up halting the app process.
                     i += 3;
                 }
 
@@ -56,6 +56,13 @@ public class Inside_website extends AsyncTask<Void,Void,Void> {
                 //-------------------------------------------------------
 
                 //-------------------------------------------------------
+                //                  Compare points
+
+                String a = obj.get(i).show_desp1();
+                String b = obj.get(i).show_desp2();
+                String c = obj.get(i).show_desp3();
+                //-------------------------------------------------------
+                //-------------------------------------------------------
                 //              Description
                 Elements section = div1.select("section#section-techdata");
                 Elements div_content = section.select("div.row");
@@ -65,8 +72,7 @@ public class Inside_website extends AsyncTask<Void,Void,Void> {
                 String s = paragraph.text();
                 //-------------------------------------------------------
 
-                if(s!=null)
-                    obj.set(i,new Data(image,link,product_id,product_name,s));                                //adding the description to the main list.
+                obj.set(i,new Data(image,link,product_id,product_name,s,a,b,c));                                //adding the description to the main list.
             }
 
            data.save_items(obj);                                                                    //Saving the new List
@@ -76,12 +82,15 @@ public class Inside_website extends AsyncTask<Void,Void,Void> {
 
             for(int i=0;i<obj.size();i++)
             {
-                String a,b,c,d,e;
+                String a,b,c,d,e,f,g,h;
                 a=obj.get(i).show_link();
                 b=obj.get(i).show_Product_id();
                 c=obj.get(i).show_Product_name();
                 d=obj.get(i).show_product_description();
                 e=obj.get(i).show_product_images();
+                f = obj.get(i).show_desp1();
+                g = obj.get(i).show_desp2();
+                h = obj.get(i).show_desp3();
 
                 extra_firebase object = new extra_firebase();
 
@@ -90,9 +99,11 @@ public class Inside_website extends AsyncTask<Void,Void,Void> {
                 object.setProduct_name(c);
                 object.setUrl(a);
                 object.setImages(e);
+                object.setDesp1(f);
+                object.setDesp2(g);
+                object.setDesp3(h);
 
                 mdatabase.child(b).setValue(object);
-
             }
 
         }

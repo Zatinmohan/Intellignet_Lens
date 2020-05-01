@@ -93,7 +93,11 @@ public class ResultActivity extends AppCompatActivity {
                         String x = snapshot.child("product_id").getValue(String.class);             //Get the Product ID
                         String img = snapshot.child("images").getValue(String.class);               //Get Images url
                         String url = snapshot.child("url").getValue(String.class);                  //Getting Page url.
-                        itemlist.add(new extra_firebase(x,z,img,y,url));
+                        String desp1 = snapshot.child("desp1").getValue(String.class);
+                        String desp2 = snapshot.child("desp2").getValue(String.class);
+                        String desp3 = snapshot.child("desp3").getValue(String.class);
+
+                        itemlist.add(new extra_firebase(x,z,img,y,url,desp1,desp2,desp3));
                         isFound=true;
                     }
                 }

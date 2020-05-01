@@ -64,7 +64,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
                     m++;
-                    object.addition(data.getProduct_name(),data.getImages());
+                    object.addition(data.getProduct_name(),data.getImages(),data.getDesp1(),data.getDesp2(),data.getDesp3());
                     selected_items.add(object);
                 }
                 else {
@@ -116,8 +116,18 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                             Intent intent = new Intent(context,CompareActivity.class);
                             intent.putExtra("First Name",selected_items.get(0).getProduct_name());
                             intent.putExtra("Second Name",selected_items.get(1).getProduct_name());
+
                             intent.putExtra("First Image",selected_items.get(0).getImages());
                             intent.putExtra("Second Image",selected_items.get(1).getImages());
+
+                            intent.putExtra("F First Desp",selected_items.get(0).getDesp1());
+                            intent.putExtra("F Second Desp",selected_items.get(0).getDesp2());
+                            intent.putExtra("F Third Desp",selected_items.get(0).getDesp2());
+
+                            intent.putExtra("S First Desp",selected_items.get(1).getDesp1());
+                            intent.putExtra("S Second Desp",selected_items.get(1).getDesp2());
+                            intent.putExtra("S Third Desp",selected_items.get(1).getDesp3());
+
                             context.startActivity(intent);
                         }
                     }

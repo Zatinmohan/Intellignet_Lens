@@ -12,17 +12,31 @@ public class extra_firebase {
 
     public extra_firebase(){}
 
-    public void addition(String product_name, String images){
+    public void addition(String product_name, String images,String desp1, String desp2, String desp3){
         this.images = images;
         this.product_name = product_name;
+        this.desp1 = desp1;
+        this.desp2 = desp2;
+        this.desp3 = desp3;
     }
-    public extra_firebase(String product_id,String product_name,String images,String description,String url){
+    public extra_firebase(String product_id,String product_name,String images,String description,String url,String desp1, String desp2, String desp3){
         this.product_id = product_id;
         this.product_name = product_name;
         this.images = images;
         this.description = description;
         this.url = url;
+        this.desp1=desp1;
+        this.desp2 = desp2;
+        this.desp3 = desp3;
     }
+
+    public void setDesp1(String desp1){this.desp1 = desp1;}
+    public void setDesp2(String desp2){this.desp2 = desp2;}
+    public void setDesp3(String desp3){this.desp3 = desp3;}
+
+    public String getDesp1(){return desp1;}
+    public String getDesp2(){return desp2;}
+    public String getDesp3(){return desp3;}
 
     public String getImages() {
         return images;
